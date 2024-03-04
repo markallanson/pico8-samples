@@ -1,8 +1,8 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
--- pico8 version of codetrain's
--- starfield. 
+-- pico8 version of 
+-- codigntrain's starfield. 
 -- https://www.youtube.com/watch?v=17wooqgxsrm
 -- note this uses the flr
 -- optimisation `& -1`
@@ -24,10 +24,6 @@ camera(camshift_x, camshift_y)
 
 -- resets a star to a new random
 -- position
--- @param star the star to reset 
--- @param nz z position to use 
--- @return a star in a new 
--- random position
 function reset_star(star, nz)
   -- rnd only generates positive
   -- numbers, so shift x,y by
