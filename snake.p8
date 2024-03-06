@@ -25,12 +25,12 @@ function create_snake()
 end
 
 function reset_food()
-	f = {}
-	-- -2 and +1 are here to stop
-	-- food spawning in the border
-	f.x = flr(rnd(width-2)) + 1
-	f.y = flr(rnd(height-2)) + 1
- return f
+  f = {}
+  -- -2 and +1 are here to stop
+  -- food spawning in the border
+  f.x = flr(rnd(width-2)) + 1
+  f.y = flr(rnd(height-2)) + 1
+  return f
 end
 
 snake = create_snake()
@@ -80,10 +80,10 @@ end
 
 function check_endgame()
   if (
-  	 snake.x < 1
-  	 or snake.x > width - 2
-  	 or snake.y < 1
-  	 or snake.y > height - 2
+    snake.x < 1
+    or snake.x > width - 2
+    or snake.y < 1
+    or snake.y > height - 2
   ) then
     stop("game over")
   end
@@ -102,10 +102,10 @@ end
 function _update()
   if not endgame then
     change_direction()
-	   move_snake()
-	   check_endgame()
-	   eat()
-	 end
+    move_snake()
+    check_endgame()
+    eat()
+  end
 end
 
 function cprint(text, y, c)
