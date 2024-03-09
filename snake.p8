@@ -7,6 +7,9 @@ __lua__
 // https://www.youtube.com/watch?v=aagk-fj-bam
 width = 128
 height = 128
+swidth = 2
+fwidth = 2
+endgame = false
 
 function create_snake()
   snake = {}
@@ -26,15 +29,20 @@ end
 
 function reset_food()
   f = {}
-  -- -2 and +1 are here to stop
+  -- -4 and +8 are here to stop
   -- food spawning in the border
-  f.x = flr(rnd(width-2)) + 1
-  f.y = flr(rnd(height-2)) + 1
+  f.x = flr(rnd(width-4)) + 8
+  f.y = flr(rnd(height-4)) + 8
   return f
 end
 
-snake = create_snake()
-food = reset_food()
+function init_game() 
+  snake = create_snake()
+  food = reset_food()
+  endgame = false
+end
+
+init_game()
 
 function change_direction()
   if btn(0) then
@@ -85,14 +93,24 @@ function check_endgame()
     or snake.y < 1
     or snake.y > height - 2
   ) then
-    stop("game over")
+    endgame = true
   end
 end
 
 function eat()
+  eat_x_diff = abs(
+    snake.x - food.x
+  )
+  eat_y_diff = abs(
+    snake.y - food.y
+  )
   if (
-    snake.x == food.x
-    and snake.y == food.y
+    (snake.x == food.x 
+     and eat_y_diff < 4)
+    or
+    (snake.y == food.y
+     and eat_x_diff < 4
+    )
   ) then
     food = reset_food()
     snake.total += 1
@@ -105,6 +123,10 @@ function _update()
     move_snake()
     check_endgame()
     eat()
+  else 
+    if btnp(4) then
+      init_game()
+    end 
   end
 end
 
@@ -120,24 +142,33 @@ function _draw()
   -- of food eaten
   print("score: ", 2, 2)
   print(snake.total)
-  
+	   
   -- draw the game b0undary
   rect(
     0, 0, width-1, height-1, 7
   )
 
   -- draw the food  
-  pset(
-    food.x, food.y, 3
+  circfill(
+    food.x, food.y, fwidth, 3
   )
   -- and the snake
-  pset(
-    snake.x, snake.y, 7
+  circfill(
+    snake.x, snake.y, swidth, 7
   )
   -- and it's tail
   for i=1,count(snake.tail) do
     tail = snake.tail[i]
-    pset(tail.x, tail.y, 7)
+    circfill(
+      tail.x, tail.y, 1, 7
+    )
+  end
+  
+  if endgame then
+    print("game over", 30, height/3)
+    print(
+      "press `o` to play again"
+    )
   end
 end
 
