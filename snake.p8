@@ -87,14 +87,27 @@ function move_snake()
 end
 
 function check_endgame()
-  if (
+  snake_out_of_bounds = (
     snake.x < 1
     or snake.x > width - 2
     or snake.y < 1
     or snake.y > height - 2
-  ) then
-    endgame = true
+  )
+
+  snake_ate_itself = false
+  for i=1,count(snake.tail) do
+    tail_bit = snake.tail[i]
+    snake_ate_itself = (
+      snake.x == tail_bit.x 
+      and snake.y == tail_bit.y
+    )
+    if snake_ate_itself then
+      break
+    end
   end
+   
+  endgame = snake_out_of_bounds
+    or snake_ate_itself
 end
 
 function eat()
