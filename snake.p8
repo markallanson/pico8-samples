@@ -10,6 +10,7 @@ height = 128
 swidth = 2
 fwidth = 2
 endgame = false
+speed = 1
 
 function create_snake()
   snake = {}
@@ -31,8 +32,8 @@ function reset_food()
   f = {}
   -- -4 and +8 are here to stop
   -- food spawning in the border
-  f.x = flr(rnd(width-4)) + 8
-  f.y = flr(rnd(height-4)) + 8
+  f.x = flr(rnd(width-4)) + 2
+  f.y = flr(rnd(height-4)) + 2
   return f
 end
 
@@ -46,17 +47,17 @@ init_game()
 
 function change_direction()
   if btn(0) then
-    snake.xspeed = -1
+    snake.xspeed = -speed
     snake.yspeed = 0
   elseif btn(1) then
-    snake.xspeed = 1
+    snake.xspeed = speed
     snake.yspeed = 0
   elseif btn(2) then
     snake.xspeed = 0
-    snake.yspeed = -1
+    snake.yspeed = -speed
   elseif btn(3) then
     snake.xspeed = 0
-    snake.yspeed = 1
+    snake.yspeed = speed
   end
 end
 
